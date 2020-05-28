@@ -1,6 +1,7 @@
 # message-system
 
 PHP message-system client for Laravel && Lumen
+
 基于Roadrunner + Nats
 
 ### 起因
@@ -23,27 +24,32 @@ following to your composer.json.
         ...
     }
 
-or execute like:
+or execute command.
 
     composer require voilaf/message-system
 
 ### Configuration
 
-1、copy config/message.php to project/config/message.php
+1、copy `config/message.php` to `project/config/message.php`
+
 2、add your sub or pub subjects
+
 3、add `APP_NAME` to .env
+
 4、register MessageSystemProvider to project
+
     $this->app->register(\Voilaf\MessageSystem\MessageServiceProvider::class);
+
 5、generate Subscribe class in `app\Subs` by executing command
+
     php artisan make:subscribe ExampleSubscribe
 
 
-### Subscription
+### Subscription （Laravel && Lumen）
 
 ```php
     // string $subject 发布事件名
     // string $data 发布信息
     // string $desc 事件描述
-    // Laravel && Lumen
     app('message-client')->pub($subject, $data, $desc);
 ```
