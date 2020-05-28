@@ -17,8 +17,6 @@ class Dispatcher
      */
     public function proxyPass(string $subject, string $data, string $desc)
     {
-        \Log::debug('1111');
-
         // 检查订阅的subject是否可用，并获取对应的订阅回调类
         $list = app('config')->get('message.sub_subjects');
         if (!isset($list[$subject])) {
@@ -36,12 +34,12 @@ class Dispatcher
         // 判断执行类是否已存在
         if (!in_array($subHandle, $this->proxyHandler)) {
             if (!class_exists($subHandle)) {
-                \Log::error($subject.":消息回调类不存在:".$subHandle);
+                \Log::debug($subject.":消息回调类不存在:".$subHandle);
                 return false;
             }
             $handler = new $subHandle();
             if (!$handler instanceof Subscribe) {
-                \Log::error($subject.":未实现订阅接口:".$subHandle);
+                \Log::debug($subject.":未实现订阅接口:".$subHandle);
                 return false;
             }
             $this->proxyHandler[$subHandle] = $handler;
